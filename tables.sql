@@ -43,3 +43,14 @@ CREATE INDEX subscriptions_created_at_idx ON public.subscriptions(created_at);
 
 -- Composite index for common queries
 CREATE INDEX subscriptions_user_feed_idx ON public.subscriptions(user_id, feed_id);
+
+-- FOLDERS
+CREATE TABLE public.folders (
+	id serial4 NOT NULL,
+	user_id int NOT NULL,
+	name text NOT NULL,
+	created_at timestamptz NOT NULL DEFAULT NOW(),
+	CONSTRAINT folders_id_pkey PRIMARY KEY (id),
+	CONSTRAINT folders_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE
+);
+CREATE INDEX folders_user_id_idx ON public.feeds(user_id);
